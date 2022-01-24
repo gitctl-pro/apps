@@ -1,0 +1,25 @@
+domain: gitctl.com
+layout:
+- go.kubebuilder.io/v3
+projectName: apps
+repo: github.com/gitctl-pro/apps
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: gitctl.com
+  group: apps
+  kind: Application
+  path: github.com/gitctl-pro/apps/api/v1
+  version: v1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: gitctl.com
+  group: apps
+  kind: Canary
+  path: github.com/gitctl-pro/apps/api/v1
+  version: v1
+version: "3"
