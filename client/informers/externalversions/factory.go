@@ -24,6 +24,7 @@ import (
 
 	versioned "github.com/gitctl-pro/apps/client/clientset/versioned"
 	apps "github.com/gitctl-pro/apps/client/informers/externalversions/apps"
+	core "github.com/gitctl-pro/apps/client/informers/externalversions/core"
 	internalinterfaces "github.com/gitctl-pro/apps/client/informers/externalversions/internalinterfaces"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
@@ -172,8 +173,13 @@ type SharedInformerFactory interface {
 	WaitForCacheSync(stopCh <-chan struct{}) map[reflect.Type]bool
 
 	Apps() apps.Interface
+	Core() core.Interface
 }
 
 func (f *sharedInformerFactory) Apps() apps.Interface {
 	return apps.New(f, f.namespace, f.tweakListOptions)
+}
+
+func (f *sharedInformerFactory) Core() core.Interface {
+	return core.New(f, f.namespace, f.tweakListOptions)
 }

@@ -20,7 +20,7 @@ package fake
 import (
 	"context"
 
-	appsv1 "github.com/gitctl-pro/apps/api/apps/v1"
+	appsv1 "github.com/gitctl-pro/apps/apis/apps/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	labels "k8s.io/apimachinery/pkg/labels"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"

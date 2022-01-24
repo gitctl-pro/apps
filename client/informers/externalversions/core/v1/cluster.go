@@ -21,69 +21,68 @@ import (
 	"context"
 	time "time"
 
-	appsv1 "github.com/gitctl-pro/apps/apis/apps/v1"
+	corev1 "github.com/gitctl-pro/apps/apis/core/v1"
 	versioned "github.com/gitctl-pro/apps/client/clientset/versioned"
 	internalinterfaces "github.com/gitctl-pro/apps/client/informers/externalversions/internalinterfaces"
-	v1 "github.com/gitctl-pro/apps/client/listers/apps/v1"
+	v1 "github.com/gitctl-pro/apps/client/listers/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	watch "k8s.io/apimachinery/pkg/watch"
 	cache "k8s.io/client-go/tools/cache"
 )
 
-// ApplicationInformer provides access to a shared informer and lister for
-// Applications.
-type ApplicationInformer interface {
+// ClusterInformer provides access to a shared informer and lister for
+// Clusters.
+type ClusterInformer interface {
 	Informer() cache.SharedIndexInformer
-	Lister() v1.ApplicationLister
+	Lister() v1.ClusterLister
 }
 
-type applicationInformer struct {
+type clusterInformer struct {
 	factory          internalinterfaces.SharedInformerFactory
 	tweakListOptions internalinterfaces.TweakListOptionsFunc
-	namespace        string
 }
 
-// NewApplicationInformer constructs a new informer for Application type.
+// NewClusterInformer constructs a new informer for Cluster type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
 // one. This reduces memory footprint and number of connections to the server.
-func NewApplicationInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
-	return NewFilteredApplicationInformer(client, namespace, resyncPeriod, indexers, nil)
+func NewClusterInformer(client versioned.Interface, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
+	return NewFilteredClusterInformer(client, resyncPeriod, indexers, nil)
 }
 
-// NewFilteredApplicationInformer constructs a new informer for Application type.
+// NewFilteredClusterInformer constructs a new informer for Cluster type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
 // one. This reduces memory footprint and number of connections to the server.
-func NewFilteredApplicationInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
+func NewFilteredClusterInformer(client versioned.Interface, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
 	return cache.NewSharedIndexInformer(
 		&cache.ListWatch{
 			ListFunc: func(options metav1.ListOptions) (runtime.Object, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.AppsV1().Applications(namespace).List(context.TODO(), options)
+				return client.CoreV1().Clusters().List(context.TODO(), options)
 			},
 			WatchFunc: func(options metav1.ListOptions) (watch.Interface, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.AppsV1().Applications(namespace).Watch(context.TODO(), options)
+				return client.CoreV1().Clusters().Watch(context.TODO(), options)
 			},
 		},
-		&appsv1.Application{},
+		&corev1.Cluster{},
 		resyncPeriod,
 		indexers,
 	)
 }
 
-func (f *applicationInformer) defaultInformer(client versioned.Interface, resyncPeriod time.Duration) cache.SharedIndexInformer {
-	return NewFilteredApplicationInformer(client, f.namespace, resyncPeriod, cache.Indexers{cache.NamespaceIndex: cache.MetaNamespaceIndexFunc}, f.tweakListOptions)
+func (f *clusterInformer) defaultInformer(client versioned.Interface, resyncPeriod time.Duration) cache.SharedIndexInformer {
+	return NewFilteredClusterInformer(client, resyncPeriod, cache.Indexers{cache.NamespaceIndex: cache.MetaNamespaceIndexFunc}, f.tweakListOptions)
 }
 
-func (f *applicationInformer) Informer() cache.SharedIndexInformer {
-	return f.factory.InformerFor(&appsv1.Application{}, f.defaultInformer)
+func (f *clusterInformer) Informer() cache.SharedIndexInformer {
+	return f.factory.InformerFor(&corev1.Cluster{}, f.defaultInformer)
 }
 
-func (f *applicationInformer) Lister() v1.ApplicationLister {
-	return v1.NewApplicationLister(f.Informer().GetIndexer())
+func (f *clusterInformer) Lister() v1.ClusterLister {
+	return v1.NewClusterLister(f.Informer().GetIndexer())
 }

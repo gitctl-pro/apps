@@ -18,7 +18,8 @@ limitations under the License.
 package fake
 
 import (
-	appsv1 "github.com/gitctl-pro/apps/api/apps/v1"
+	appsv1 "github.com/gitctl-pro/apps/apis/apps/v1"
+	corev1 "github.com/gitctl-pro/apps/apis/core/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
@@ -31,6 +32,7 @@ var codecs = serializer.NewCodecFactory(scheme)
 
 var localSchemeBuilder = runtime.SchemeBuilder{
 	appsv1.AddToScheme,
+	corev1.AddToScheme,
 }
 
 // AddToScheme adds all types of this clientset into the given scheme. This allows composition

@@ -21,6 +21,8 @@ import (
 	clientset "github.com/gitctl-pro/apps/client/clientset/versioned"
 	appsv1 "github.com/gitctl-pro/apps/client/clientset/versioned/typed/apps/v1"
 	fakeappsv1 "github.com/gitctl-pro/apps/client/clientset/versioned/typed/apps/v1/fake"
+	corev1 "github.com/gitctl-pro/apps/client/clientset/versioned/typed/core/v1"
+	fakecorev1 "github.com/gitctl-pro/apps/client/clientset/versioned/typed/core/v1/fake"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/discovery"
@@ -81,4 +83,9 @@ var (
 // AppsV1 retrieves the AppsV1Client
 func (c *Clientset) AppsV1() appsv1.AppsV1Interface {
 	return &fakeappsv1.FakeAppsV1{Fake: &c.Fake}
+}
+
+// CoreV1 retrieves the CoreV1Client
+func (c *Clientset) CoreV1() corev1.CoreV1Interface {
+	return &fakecorev1.FakeCoreV1{Fake: &c.Fake}
 }

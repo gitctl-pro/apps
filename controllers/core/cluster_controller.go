@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package controllers
+package core
 
 import (
 	"context"
-	appsv1 "github.com/gitctl-pro/apps/api/apps/v1"
+	corev1 "github.com/gitctl-pro/apps/apis/core/v1"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -26,26 +26,26 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log"
 )
 
-// CanaryReconciler reconciles a Canary object
-type CanaryReconciler struct {
+// ClusterReconciler reconciles a Cluster object
+type ClusterReconciler struct {
 	client.Client
 	Scheme *runtime.Scheme
 }
 
-//+kubebuilder:rbac:groups=apps.gitctl.com,resources=canaries,verbs=get;list;watch;create;update;patch;delete
-//+kubebuilder:rbac:groups=apps.gitctl.com,resources=canaries/status,verbs=get;update;patch
-//+kubebuilder:rbac:groups=apps.gitctl.com,resources=canaries/finalizers,verbs=update
+//+kubebuilder:rbac:groups=core.gitctl.com,resources=clusters,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups=core.gitctl.com,resources=clusters/status,verbs=get;update;patch
+//+kubebuilder:rbac:groups=core.gitctl.com,resources=clusters/finalizers,verbs=update
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
 // TODO(user): Modify the Reconcile function to compare the state specified by
-// the Canary object against the actual cluster state, and then
+// the Cluster object against the actual cluster state, and then
 // perform operations to make the cluster state reflect the state specified by
 // the user.
 //
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.10.0/pkg/reconcile
-func (r *CanaryReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
+func (r *ClusterReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
 
 	// TODO(user): your logic here
@@ -54,8 +54,8 @@ func (r *CanaryReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctr
 }
 
 // SetupWithManager sets up the controller with the Manager.
-func (r *CanaryReconciler) SetupWithManager(mgr ctrl.Manager) error {
+func (r *ClusterReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
-		For(&appsv1.Canary{}).
+		For(&corev1.Cluster{}).
 		Complete(r)
 }

@@ -6,9 +6,10 @@
 ```shell
 go mod init github.com/gitctl-pro/apps
 kubebuilder init --domain gitctl.com
-kubebuilder edit --multigroup=false
+kubebuilder edit --multigroup=true
 kubebuilder create api --group apps --version v1 --kind Application
 kubebuilder create api --group apps --version v1 --kind Canary
+kubebuilder create api --group core --version v1 --kind Cluster
 go mod vendor 
 make 
 ```

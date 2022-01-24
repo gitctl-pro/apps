@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package controllers
+package apps
 
 import (
-	appsv1 "github.com/gitctl-pro/apps/api/apps/v1"
+	appsv1 "github.com/gitctl-pro/apps/apis/apps/v1"
 	"path/filepath"
 	"testing"
 

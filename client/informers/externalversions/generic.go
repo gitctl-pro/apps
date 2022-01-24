@@ -20,7 +20,8 @@ package externalversions
 import (
 	"fmt"
 
-	v1 "github.com/gitctl-pro/apps/api/apps/v1"
+	v1 "github.com/gitctl-pro/apps/apis/apps/v1"
+	corev1 "github.com/gitctl-pro/apps/apis/core/v1"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
 	cache "k8s.io/client-go/tools/cache"
 )
@@ -56,6 +57,10 @@ func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Apps().V1().Applications().Informer()}, nil
 	case v1.SchemeGroupVersion.WithResource("canaries"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Apps().V1().Canaries().Informer()}, nil
+
+		// Group=core.gitclt.com, Version=v1
+	case corev1.SchemeGroupVersion.WithResource("clusters"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Core().V1().Clusters().Informer()}, nil
 
 	}
 

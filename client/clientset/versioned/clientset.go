@@ -21,6 +21,7 @@ import (
 	"fmt"
 
 	appsv1 "github.com/gitctl-pro/apps/client/clientset/versioned/typed/apps/v1"
+	corev1 "github.com/gitctl-pro/apps/client/clientset/versioned/typed/core/v1"
 	discovery "k8s.io/client-go/discovery"
 	rest "k8s.io/client-go/rest"
 	flowcontrol "k8s.io/client-go/util/flowcontrol"
@@ -29,6 +30,7 @@ import (
 type Interface interface {
 	Discovery() discovery.DiscoveryInterface
 	AppsV1() appsv1.AppsV1Interface
+	CoreV1() corev1.CoreV1Interface
 }
 
 // Clientset contains the clients for groups. Each group has exactly one
@@ -36,11 +38,17 @@ type Interface interface {
 type Clientset struct {
 	*discovery.DiscoveryClient
 	appsV1 *appsv1.AppsV1Client
+	coreV1 *corev1.CoreV1Client
 }
 
 // AppsV1 retrieves the AppsV1Client
 func (c *Clientset) AppsV1() appsv1.AppsV1Interface {
 	return c.appsV1
+}
+
+// CoreV1 retrieves the CoreV1Client
+func (c *Clientset) CoreV1() corev1.CoreV1Interface {
+	return c.coreV1
 }
 
 // Discovery retrieves the DiscoveryClient
@@ -68,6 +76,10 @@ func NewForConfig(c *rest.Config) (*Clientset, error) {
 	if err != nil {
 		return nil, err
 	}
+	cs.coreV1, err = corev1.NewForConfig(&configShallowCopy)
+	if err != nil {
+		return nil, err
+	}
 
 	cs.DiscoveryClient, err = discovery.NewDiscoveryClientForConfig(&configShallowCopy)
 	if err != nil {
@@ -81,6 +93,7 @@ func NewForConfig(c *rest.Config) (*Clientset, error) {
 func NewForConfigOrDie(c *rest.Config) *Clientset {
 	var cs Clientset
 	cs.appsV1 = appsv1.NewForConfigOrDie(c)
+	cs.coreV1 = corev1.NewForConfigOrDie(c)
 
 	cs.DiscoveryClient = discovery.NewDiscoveryClientForConfigOrDie(c)
 	return &cs
@@ -90,6 +103,7 @@ func NewForConfigOrDie(c *rest.Config) *Clientset {
 func New(c rest.Interface) *Clientset {
 	var cs Clientset
 	cs.appsV1 = appsv1.New(c)
+	cs.coreV1 = corev1.New(c)
 
 	cs.DiscoveryClient = discovery.NewDiscoveryClient(c)
 	return &cs

@@ -1,6 +1,7 @@
 domain: gitctl.com
 layout:
 - go.kubebuilder.io/v3
+multigroup: true
 projectName: apps
 repo: github.com/gitctl-pro/apps
 resources:
@@ -11,7 +12,7 @@ resources:
   domain: gitctl.com
   group: apps
   kind: Application
-  path: github.com/gitctl-pro/apps/api/v1
+  path: github.com/gitctl-pro/apps/apis/v1
   version: v1
 - api:
     crdVersion: v1
@@ -20,6 +21,15 @@ resources:
   domain: gitctl.com
   group: apps
   kind: Canary
-  path: github.com/gitctl-pro/apps/api/v1
+  path: github.com/gitctl-pro/apps/apis/v1
+  version: v1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: gitctl.com
+  group: core
+  kind: Cluster
+  path: github.com/gitctl-pro/apps/apis/core/v1
   version: v1
 version: "3"

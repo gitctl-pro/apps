@@ -21,7 +21,7 @@ import (
 	"context"
 	time "time"
 
-	appsv1 "github.com/gitctl-pro/apps/api/apps/v1"
+	appsv1 "github.com/gitctl-pro/apps/apis/apps/v1"
 	versioned "github.com/gitctl-pro/apps/client/clientset/versioned"
 	internalinterfaces "github.com/gitctl-pro/apps/client/informers/externalversions/internalinterfaces"
 	v1 "github.com/gitctl-pro/apps/client/listers/apps/v1"
