@@ -25,11 +25,32 @@ import (
 
 // ApplicationSpec defines the desired state of Application
 type ApplicationSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	// +optional
+	Replicas *int32 `json:"replicas,omitempty" protobuf:"varint,1,opt,name=replicas"`
+	// +optional
+	Env string `json:"env" protobuf:"bytes,2,opt,name=env"`
+	// +optional
+	WorkloadRef *ObjectReference `json:"workload_ref,omitempty" protobuf:"bytes,3,opt,name=workload_ref"`
+	// +optional
+	AppRepo *AppRepo `json:"appRepo" protobuf:"bytes,4,opt,name=appRepo"`
+}
 
-	// Foo is an example field of Application. Edit application_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+// ObjectRef holds a references to the Kubernetes object
+type ObjectReference struct {
+	// API Version of the referent
+	APIVersion string `json:"apiVersion,omitempty" protobuf:"bytes,1,opt,name=apiVersion"`
+	// Kind of the referent
+	Kind string `json:"kind,omitempty" protobuf:"bytes,2,opt,name=kind"`
+	// Name of the referent
+	Name string `json:"name,omitempty" protobuf:"bytes,3,opt,name=name"`
+}
+
+type AppRepo struct {
+	RepoPath  string `json:"repoPath,omitempty" protobuf:"bytes,1,opt,name=apiVersion"`
+	RepoType  string `json:"repoType,omitempty" protobuf:"bytes,2,opt,name=repoType"`
+	RepoKey   string `json:"repoKey,omitempty" protobuf:"bytes,3,opt,name=repoKey"`
+	RepoValue string `json:"repoValue,omitempty" protobuf:"bytes,4,opt,name=repoValue"`
+	RepoSub   string `json:"repoSub,omitempty" protobuf:"bytes,5,opt,name=repoSub"`
 }
 
 // ApplicationStatus defines the observed state of Application
