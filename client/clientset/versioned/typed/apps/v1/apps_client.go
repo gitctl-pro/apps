@@ -29,7 +29,7 @@ type AppsV1Interface interface {
 	CanariesGetter
 }
 
-// AppsV1Client is used to interact with features provided by the apps.gitclt.com group.
+// AppsV1Client is used to interact with features provided by the apps.gitctl.com group.
 type AppsV1Client struct {
 	restClient rest.Interface
 }

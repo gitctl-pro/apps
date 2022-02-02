@@ -35,9 +35,9 @@ type FakeCanaries struct {
 	ns   string
 }
 
-var canariesResource = schema.GroupVersionResource{Group: "apps.gitclt.com", Version: "v1", Resource: "canaries"}
+var canariesResource = schema.GroupVersionResource{Group: "apps.gitctl.com", Version: "v1", Resource: "canaries"}
 
-var canariesKind = schema.GroupVersionKind{Group: "apps.gitclt.com", Version: "v1", Kind: "Canary"}
+var canariesKind = schema.GroupVersionKind{Group: "apps.gitctl.com", Version: "v1", Kind: "Canary"}
 
 // Get takes name of the canary, and returns the corresponding canary object, and an error if there is any.
 func (c *FakeCanaries) Get(ctx context.Context, name string, options v1.GetOptions) (result *appsv1.Canary, err error) {

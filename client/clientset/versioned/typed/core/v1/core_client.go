@@ -28,7 +28,7 @@ type CoreV1Interface interface {
 	ClustersGetter
 }
 
-// CoreV1Client is used to interact with features provided by the core.gitclt.com group.
+// CoreV1Client is used to interact with features provided by the core.gitctl.com group.
 type CoreV1Client struct {
 	restClient rest.Interface
 }

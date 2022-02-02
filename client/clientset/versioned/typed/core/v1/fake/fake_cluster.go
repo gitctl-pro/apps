@@ -34,9 +34,9 @@ type FakeClusters struct {
 	Fake *FakeCoreV1
 }
 
-var clustersResource = schema.GroupVersionResource{Group: "core.gitclt.com", Version: "v1", Resource: "clusters"}
+var clustersResource = schema.GroupVersionResource{Group: "core.gitctl.com", Version: "v1", Resource: "clusters"}
 
-var clustersKind = schema.GroupVersionKind{Group: "core.gitclt.com", Version: "v1", Kind: "Cluster"}
+var clustersKind = schema.GroupVersionKind{Group: "core.gitctl.com", Version: "v1", Kind: "Cluster"}
 
 // Get takes name of the cluster, and returns the corresponding cluster object, and an error if there is any.
 func (c *FakeClusters) Get(ctx context.Context, name string, options v1.GetOptions) (result *corev1.Cluster, err error) {
